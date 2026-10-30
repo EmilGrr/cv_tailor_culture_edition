@@ -1,0 +1,33 @@
+\documentclass[10.5pt,a4paper]{article}
+\usepackage[top=14mm,bottom=14mm,left=22mm,right=22mm]{geometry}
+\usepackage{fontspec}
+\setmainfont{texgyrepagella}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic,Ligatures=NoCommon]
+\usepackage{polyglossia}
+\setmainlanguage{<< lang >>}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{needspace}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\linespread{1.0}
+
+\newcommand{\cvsection}[1]{%
+  \Needspace{3\baselineskip}\vspace{0.9em}{\scshape\large #1}\par\vspace{-0.45em}\rule{\linewidth}{0.4pt}\par\vspace{0.35em}}
+\newcommand{\cventry}[3]{%
+  \vspace{0.35em}\noindent{\bfseries #1}\hfill #2\par
+  \def\cvtmp{#3}\ifx\cvtmp\empty\else{\itshape #3}\par\fi}
+\newcommand{\cvpara}[1]{#1\par}
+\newenvironment{cvbullets}{\begin{itemize}[leftmargin=1.2em,itemsep=0.15em,topsep=0.25em,parsep=0pt]}{\end{itemize}}
+
+\begin{document}
+\begin{center}
+  {\fontsize{22}{26}\selectfont << c.contact.name >>}\par
+  <% if c.contact.title %>
+  \vspace{0.2em}{\itshape << c.contact.title >>}\par
+  <% endif %>
+  \vspace{0.4em}<< contact_line >>
+\end{center}
+<% include "_body.tex.j2" %>
+\end{document}

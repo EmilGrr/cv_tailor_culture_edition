@@ -1,0 +1,61 @@
+<# Shared body. The including template defines \cvsection, \cventry, \cvpara and the cvbullets environment. #>
+<% if show.summary and c.summary %>
+\cvsection{<< L.summary >>}
+\cvpara{<< c.summary >>}
+<% endif %>
+<% if show.core_skills and skills_line %>
+\cvsection{<< L.core_skills >>}
+\cvpara{<< skills_line >>}
+<% endif %>
+<% if show.experience and c.experience %>
+\cvsection{<< L.experience >>}
+<% for e in c.experience %>
+\cventry{<< e.role >>}{<< e.period >>}{<< e.employer_line >>}
+<% if e.bullets %>
+\begin{cvbullets}
+<% for b in e.bullets %>
+\item << b.text >>
+<% endfor %>
+\end{cvbullets}
+<% endif %>
+<% endfor %>
+<% endif %>
+<% if show.projects and c.projects %>
+\cvsection{<< L.projects >>}
+<% for p in c.projects %>
+\cventry{<< p.title >>}{<< p.year >>}{<< p.meta >>}
+<% if p.scope %>
+\cvpara{<< p.scope >>}
+<% endif %>
+<% endfor %>
+<% endif %>
+<% if show.education and c.education %>
+\cvsection{<< L.education >>}
+<% for edu in c.education %>
+\cventry{<< edu.degree >>}{<< edu.period >>}{<< edu.line >>}
+<% if edu.details %>
+\cvpara{<< edu.details >>}
+<% endif %>
+<% endfor %>
+<% endif %>
+<% if show.volunteer and c.volunteer %>
+\cvsection{<< L.volunteer >>}
+<% for v in c.volunteer %>
+\cventry{<< v.role >>}{<< v.period >>}{<< v.organisation >>}
+<% if v.details %>
+\cvpara{<< v.details >>}
+<% endif %>
+<% endfor %>
+<% endif %>
+<% if show.languages and languages_line %>
+\cvsection{<< L.languages >>}
+\cvpara{<< languages_line >>}
+<% endif %>
+<% if show.digital_skills and digital_line %>
+\cvsection{<< L.digital_skills >>}
+\cvpara{<< digital_line >>}
+<% endif %>
+<% if show.references %>
+\cvsection{<< L.references >>}
+\cvpara{<< references >>}
+<% endif %>

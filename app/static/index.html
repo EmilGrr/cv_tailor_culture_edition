@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CV Tailor - Culture edition</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">CV</span><span class="brand-name">Tailor</span><span class="brand-sub">Culture edition</span></div>
+    <nav class="tabs" aria-label="Sections">
+      <button class="tab is-active" data-tab="application">Application</button>
+      <button class="tab" data-tab="about">About me</button>
+    </nav>
+    <div class="status" id="status" aria-live="polite"></div>
+  </header>
+
+  <nav class="stepper" id="stepper" aria-label="Application steps">
+    <button class="step is-active" data-view="new"><span class="num">01</span><span class="lbl">Job posting</span></button>
+    <span class="step-line"></span>
+    <button class="step" data-view="edit" disabled><span class="num">02</span><span class="lbl">Edit</span></button>
+    <span class="step-line"></span>
+    <button class="step" data-view="pdf" disabled><span class="num">03</span><span class="lbl">PDF</span></button>
+  </nav>
+
+  <main class="stage">
+    <div id="banner" class="banner" hidden></div>
+
+    <section id="view-new" class="view is-active">
+      <header class="view-head">
+        <h1>Which job are you <em>applying</em> for?</h1>
+        <p class="lede">Paste the posting or give a link. The page is fetched on this computer. Only the posting text and what you have told us about yourself are sent to Claude.</p>
+      </header>
+
+      <div class="panel wide">
+        <div class="field-row">
+          <label class="field grow"><span>Link to the posting</span><input id="job-url" type="url" placeholder="https://..."></label>
+          <button class="btn ghost" id="fetch-btn" type="button">Fetch text</button>
+        </div>
+        <label class="field"><span>Posting text</span><textarea id="job-text" rows="14" placeholder="Paste the full text of the posting here."></textarea></label>
+        <div class="actions">
+          <button class="btn primary" id="draft-btn" type="button">Draft CV</button>
+          <span id="draft-hint" class="hint">Takes about a minute. You will land in the editor.</span>
+        </div>
+      </div>
+
+      <h2 class="list-title">Earlier applications</h2>
+      <ul id="saved-list" class="saved-list"></ul>
+    </section>
+
+    <section id="view-edit" class="view">
+      <header class="view-head compact">
+        <div class="head-row">
+          <div class="grow">
+            <p class="kicker">Edit the draft</p>
+            <input id="app-title" class="title-input" aria-label="Application title">
+          </div>
+          <button class="btn primary to-pdf" type="button">Continue to PDF &rarr;</button>
+        </div>
+      </header>
+
+      <div class="edit-grid">
+        <div>
+          <div class="sections" id="sections"></div>
+          <div class="add-bar" id="add-bar"></div>
+          <div class="actions end"><button class="btn primary to-pdf" type="button">Continue to PDF &rarr;</button></div>
+        </div>
+        <aside class="side" id="side">
+          <div class="panel" id="req-panel"></div>
+          <div class="panel" id="gaps-panel"></div>
+          <div class="panel" id="left-panel"></div>
+          <details class="panel"><summary>Job posting text</summary><pre id="job-pre" class="job-pre"></pre></details>
+        </aside>
+      </div>
+    </section>
+
+    <section id="view-pdf" class="view">
+      <header class="view-head compact">
+        <p class="kicker">Last step</p>
+        <h1>Your <em>CV</em> as PDF</h1>
+      </header>
+      <div class="pdf-grid">
+        <div class="panel pdf-controls">
+          <h2>Template</h2>
+          <div id="template-picker" class="templates"></div>
+          <div class="actions col">
+            <a class="btn primary" id="download-btn" hidden>Download PDF</a>
+            <button class="btn ghost" id="back-btn" type="button">&larr; Back to edit</button>
+          </div>
+        </div>
+        <div class="pdf-stage">
+          <div id="pdf-status" class="pdf-status"></div>
+          <p id="pdf-note" class="pdf-note" hidden></p>
+          <iframe id="pdf-frame" class="pdf-frame" title="PDF preview" hidden></iframe>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-about" class="view">
+      <header class="view-head">
+        <p class="kicker">About me</p>
+        <h1>Your <em>source</em> material</h1>
+        <p class="lede">Old CVs, cover letters, notes. Every sentence in a draft is drawn from here, and nothing else.</p>
+      </header>
+
+      <div class="panel qa-panel" id="qa-panel" hidden></div>
+
+      <div class="grid-2">
+        <div class="panel">
+          <h2>Upload documents</h2>
+          <label class="drop" id="drop">
+            <input type="file" id="file-input" multiple accept=".pdf,.docx,.txt,.md">
+            <span class="drop-big">Drop files here</span>
+            <span class="drop-small">PDF, DOCX, TXT or Markdown &middot; or click to choose</span>
+          </label>
+          <div id="upload-result" class="note-line"></div>
+        </div>
+        <div class="panel">
+          <h2>Write context directly</h2>
+          <form id="note-form" class="stack">
+            <label class="field"><span>Title</span><input id="note-name" placeholder="e.g. Things not in my CV" required></label>
+            <label class="field"><span>Text</span><textarea id="note-text" rows="6" placeholder="Projects, results, numbers, motivation, anything the AI should be allowed to use." required></textarea></label>
+            <button class="btn" type="submit">Save note</button>
+          </form>
+        </div>
+      </div>
+
+      <h2 class="list-title">In the knowledge base <span id="source-count" class="count"></span></h2>
+      <ul id="source-list" class="source-list"></ul>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

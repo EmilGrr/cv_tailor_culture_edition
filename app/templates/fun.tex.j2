@@ -1,0 +1,47 @@
+\documentclass[10.5pt,a4paper]{article}
+\usepackage[top=13mm,bottom=13mm,left=18mm,right=18mm]{geometry}
+\usepackage{fontspec}
+\setmainfont{texgyreadventor}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic,Ligatures=NoCommon]
+\usepackage{polyglossia}
+\setmainlanguage{<< lang >>}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{needspace}
+\definecolor{coral}{HTML}{E4453A}
+\definecolor{teal}{HTML}{0B7F76}
+\definecolor{plum}{HTML}{6B3FA0}
+\definecolor{sun}{HTML}{FFC53D}
+\definecolor{ink}{HTML}{22223B}
+\definecolor{softsun}{HTML}{FFF3CC}
+\color{ink}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\linespread{0.97}
+
+% Section chips cycle through coral, teal and plum.
+\newcounter{secn}
+\newcommand{\cvsection}[1]{%
+  \Needspace{3\baselineskip}\stepcounter{secn}\ifnum\value{secn}>3 \setcounter{secn}{1}\fi
+  \ifcase\value{secn}\def\curcolor{coral}\or\def\curcolor{coral}\or\def\curcolor{teal}\or\def\curcolor{plum}\fi
+  \vspace{0.75em}%
+  \noindent\colorbox{\curcolor}{\strut\hspace{5pt}\color{white}\bfseries\small\MakeUppercase{#1}\hspace{5pt}}%
+  {\color{\curcolor}\leaders\hrule height 1.2pt\hfill\kern0pt}\par\vspace{0.4em}}
+\newcommand{\cventry}[3]{%
+  \vspace{0.3em}\noindent{\bfseries #1}\hfill{\color{teal}\bfseries\small #2}\par
+  \def\cvtmp{#3}\ifx\cvtmp\empty\else{\color{plum}\itshape #3}\par\fi}
+\newcommand{\cvpara}[1]{#1\par}
+\newenvironment{cvbullets}{\begin{itemize}[leftmargin=1.1em,itemsep=0.1em,topsep=0.25em,parsep=0pt,label={\color{coral}\textbullet}]}{\end{itemize}}
+
+\begin{document}
+\noindent\colorbox{coral}{\parbox{\dimexpr\textwidth-2\fboxsep}{%
+  \vspace{4pt}{\color{white}\fontsize{26}{30}\selectfont\bfseries << c.contact.name >>}\par
+  <% if c.contact.title %>
+  \vspace{1pt}{\color{softsun}\large\bfseries << c.contact.title >>}\par
+  <% endif %>
+  \vspace{3pt}{\color{white}\small << contact_line >>}\vspace{3pt}%
+}}\par
+{\color{sun}\rule{\textwidth}{3pt}}\par
+<% include "_body.tex.j2" %>
+\end{document}
